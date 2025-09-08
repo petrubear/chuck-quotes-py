@@ -1,3 +1,4 @@
+pydantic-settings
 httpx
 fastapi
 uvicorn

@@ -5,5 +5,5 @@ from domain.model.quote import Quote
 
 class RetrieveQuotePort(ABC):
     @abstractmethod
-    def get_quote(self) -> Quote:
+    async def get_quote(self) -> Quote:
         pass

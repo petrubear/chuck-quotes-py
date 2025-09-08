@@ -6,8 +6,12 @@ from infrastructure.model.chuck_quote import ChuckQuote
 
 
 class RetrieveQuoteAdapter(RetrieveQuotePort):
-    def get_quote(self) -> Quote:
-        response = httpx.get("https://api.chucknorris.io/jokes/random")
+    def __init__(self, http_client: httpx.AsyncClient, api_url: str):
+        self.http_client = http_client
+        self.api_url = api_url
+
+    async def get_quote(self) -> Quote:
+        response = await self.http_client.get(self.api_url)
         response.raise_for_status()
 
         chuck_quote = ChuckQuote(**response.json())

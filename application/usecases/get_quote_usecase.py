@@ -7,5 +7,5 @@ class GetQuoteUseCase(GetQuotePort):
     def __init__(self, retrieve_quote_port: RetrieveQuotePort):
         self.retrieveQuotePort = retrieve_quote_port
 
-    def get_quote(self) -> Quote:
-        return self.retrieveQuotePort.get_quote()
+    async def get_quote(self) -> Quote:
+        return await self.retrieveQuotePort.get_quote()
