@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 
-class Quote(BaseModel):
+@dataclass(frozen=True)
+class Quote:
     value: str

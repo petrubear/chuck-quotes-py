@@ -5,7 +5,7 @@ from domain.ports.outbound.retrieve_quote_port import RetrieveQuotePort
 
 class GetQuoteUseCase(GetQuotePort):
     def __init__(self, retrieve_quote_port: RetrieveQuotePort):
-        self.retrieveQuotePort = retrieve_quote_port
+        self.retrieve_quote_port = retrieve_quote_port
 
     async def get_quote(self) -> Quote:
-        return await self.retrieveQuotePort.get_quote()
+        return await self.retrieve_quote_port.get_quote()
