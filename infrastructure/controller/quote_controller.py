@@ -11,4 +11,4 @@ router = APIRouter(prefix="/api/v1", tags=["Quote"])
 async def get_quote(quote_service: QuoteService = Depends(get_quote_service)) -> QuoteResponse:
     quote = await quote_service.get_quote()
     return QuoteResponse(quote=quote.value,
-                         len=len(quote.value))
+                         length=len(quote.value))
