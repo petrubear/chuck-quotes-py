@@ -1,4 +1,5 @@
 import httpx
+import logging
 
 from domain.model.quote import Quote
 from domain.ports.outbound.retrieve_quote_port import RetrieveQuotePort
@@ -16,6 +17,7 @@ class RetrieveQuoteAdapter(RetrieveQuotePort):
             response = await self.http_client.get(self.api_url)
             response.raise_for_status()
         except httpx.HTTPError as e:
+            logging.error(f"Could not retrieve quote from external API: {e}")
             raise CouldNotRetrieveQuoteError("Could not retrieve quote from external API") from e
 
         chuck_quote = ChuckQuote(**response.json())
