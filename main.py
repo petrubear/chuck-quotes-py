@@ -2,11 +2,21 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import httpx
 from infrastructure.controller.quote_controller import router as quote_router
+from infrastructure.configuration.config import Settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    timeout = httpx.Timeout(5.0, connect=5.0, read=5.0)
-    limits = httpx.Limits(max_keepalive_connections=20, max_connections=100)
+    settings = Settings()
+    timeout = httpx.Timeout(
+        connect=settings.http_connect_timeout,
+        read=settings.http_read_timeout,
+        write=settings.http_write_timeout,
+        pool=settings.http_pool_timeout,
+    )
+    limits = httpx.Limits(
+        max_keepalive_connections=settings.http_max_keepalive_connections,
+        max_connections=settings.http_max_connections,
+    )
     app.state.http_client = httpx.AsyncClient(timeout=timeout, limits=limits)
     try:
         yield
