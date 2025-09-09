@@ -1,6 +1,6 @@
 import httpx
 from functools import lru_cache
-from fastapi import Depends
+from fastapi import Depends, Request
 from application.service.quote_service import QuoteService
 from application.usecases.get_quote_usecase import GetQuoteUseCase
 from domain.ports.outbound.retrieve_quote_port import RetrieveQuotePort
@@ -8,9 +8,8 @@ from infrastructure.adapter.retrieve_quote_adapter import RetrieveQuoteAdapter
 from infrastructure.configuration.config import Settings
 
 
-@lru_cache()
-def get_http_client() -> httpx.AsyncClient:
-    return httpx.AsyncClient()
+def get_http_client(request: Request) -> httpx.AsyncClient:
+    return request.app.state.http_client
 
 
 @lru_cache()
